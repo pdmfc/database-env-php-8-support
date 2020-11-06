@@ -1,0 +1,55 @@
+{
+    "name": "pdmfc/database-env",
+    "description": "Get env variables from database",
+    "keywords": [
+        "pdmfc",
+        "database-env"
+    ],
+    "homepage": "https://github.com/pdmfc/database-env",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Vitor Hugo",
+            "email": "vhugo@vitorhugo.pt",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "^6.0",
+        "jackiedo/dotenv-editor": "^1.2"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pdmfc\\DatabaseEnv\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pdmfc\\DatabaseEnv\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Pdmfc\\DatabaseEnv\\DatabaseEnvServiceProvider"
+            ],
+            "aliases": {
+                "DatabaseEnv": "Pdmfc\\DatabaseEnv\\DatabaseEnvFacade"
+            }
+        }
+    }
+}
