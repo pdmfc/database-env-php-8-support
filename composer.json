@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": "^7.1",
+        "laravel/framework": "^6.0",
         "illuminate/support": "^6.0",
         "jackiedo/dotenv-editor": "^1.2"
     },

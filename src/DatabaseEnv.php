@@ -6,22 +6,27 @@ class DatabaseEnv
 {
     public static function setConfig(): void
     {
-        $config_env = DatabaseEnvRepository::all()
-            ->keyBy('key')
-            ->transform(static function ($setting) {
-                return [
-                    'value' => self::formatted_env($setting),
-                    'subscribe' => $setting->subscribe
-                ];
-            })
-            ->toArray();
+        $databaseEnv = DatabaseEnvRepository::all();
 
-        foreach ($config_env as $key => $data) {
-            $notExist = config($key) === null || empty(config($key));
-            $canSubscribe = $data['subscribe'] === 1 && !$notExist;
-            
-            if($canSubscribe || $notExist) {
-                config([$key => $data['value']]);
+        if(count($databaseEnv) > 0) {
+
+            $config_env = $databaseEnv
+                ->keyBy('key')
+                ->transform(static function ($setting) {
+                    return [
+                        'value' => self::formatted_env($setting),
+                        'subscribe' => $setting->subscribe
+                    ];
+                })
+                ->toArray();
+
+            foreach ($config_env as $key => $data) {
+                $notExist = config($key) === null || empty(config($key));
+                $canSubscribe = $data['subscribe'] === 1 && !$notExist;
+
+                if($canSubscribe || $notExist) {
+                    config([$key => $data['value']]);
+                }
             }
         }
     }
