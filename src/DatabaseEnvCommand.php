@@ -60,7 +60,7 @@ class DatabaseEnvCommand extends Command
             return false;
         }
         $subscribe = $this->choice('Subscribe if exists in .env?', ['y' => 'yes', 'n' => 'no'], 'y');
-        $type = is_int($value) ? DatabaseEnvModel::INTEGER : DatabaseEnvModel::STRING;
+        $type = $this->getType($value);
 
         $configNames = $this->searchInConfig($name);
 
