@@ -126,21 +126,55 @@ class DatabaseEnvCommand extends Command
     private function formatOutput($configFile, $key)
     {
         $path = $this->getPath([$configFile], $configFile, $key);
-        return implode('.', $path);
+        return count($path) > 0 ? $path[0] : null;
     }
 
-    private function getPath($path, $configFile, $key)
+    private function getPath($path, $configFile, $key, $arrayKey = null)
     {
+        $arr = [];
         $configKeys = array_keys(config($configFile));
         foreach($configKeys as $configKey) {
-            if($configKey === $key) {
-                $path[] = $configKey;
-                return $path;
-            }
             if(is_array(config($configFile . '.' . $configKey))) {
-                $path[] = $configKey;
-                return $this->getPath($path, $configFile . '.' . $configKey, $key);
+                $arr[$configKey] = $this->getPath($path, $configFile . '.' . $configKey, $key, $configKey);
+            }else {
+                if($configKey === $key) {
+                    $arr[$configKey] = $configFile . '.' . $configKey;
+                }else {
+                    unset($arr[$configKey]);
+                }
             }
+
+        }
+
+        return collect($arr)->flatten();
+    }
+
+    private function recursiveFind(array $haystack, $needle)
+    {
+        $iterator  = new RecursiveArrayIterator($haystack);
+        $recursive = new RecursiveIteratorIterator(
+            $iterator,
+            RecursiveIteratorIterator::SELF_FIRST
+        );
+        foreach ($recursive as $key => $value) {
+            if ($key === $needle) {
+                return $value;
+            }
+        }
+    }
+
+    private function getType($value)
+    {
+        switch ($value) {
+            case is_int($value):
+                return DatabaseEnvModel::INTEGER;
+                break;
+            case $value === 'true' || $value === 'false':
+                return DatabaseEnvModel::BOOL;
+                break;
+            default:
+                return DatabaseEnvModel::STRING;
+                break;
         }
     }
 }
