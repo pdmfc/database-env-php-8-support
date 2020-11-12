@@ -14,7 +14,7 @@ class DatabaseEnvCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'database-env:add';
+    protected $signature = 'database-env:add {keyPair} {y?}';
 
     /**
      * The console command description.
@@ -52,14 +52,17 @@ class DatabaseEnvCommand extends Command
      */
     public function handle()
     {
-        $keyValuePair = $this->ask('What is KEY=value?');
+        $keyValuePair = $this->argument('keyPair') ?? $this->ask('What is KEY=value?');
+        $allYes = $this->argument('y');
+
         try {
             [$name, $value] = explode('=', $keyValuePair);
         }catch(\Exception $e) {
             $this->error('[Error] KEY=value expected!');
             return false;
         }
-        $subscribe = $this->choice('Subscribe if exists in .env?', ['y' => 'yes', 'n' => 'no'], 'y');
+
+        $subscribe = $allYes ?? $this->choice('Subscribe if exists in .env?', ['y' => 'yes', 'n' => 'no'], 'y');
         $type = $this->getType($value);
 
         $configNames = $this->searchInConfig($name);
@@ -70,7 +73,7 @@ class DatabaseEnvCommand extends Command
         }
 
         $this->info('Current value: ' . config($configNames[0]));
-        $add = $this->choice('Current value is correct?', ['y' => 'yes', 'n' => 'no']);
+        $add = $allYes ?? $this->choice('Current value is correct?', ['y' => 'yes', 'n' => 'no']);
 
         if($add === 'n') {
             $this->error('[ABORT] Value is not correct!');
