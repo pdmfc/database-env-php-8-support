@@ -1,11 +1,11 @@
 {
-    "name": "pdmfc/database-env",
+    "name": "freis/database-env",
     "description": "Get env variables from database",
     "keywords": [
         "pdmfc",
         "database-env"
     ],
-    "homepage": "https://github.com/pdmfc/database-env",
+    "homepage": "https://github.com/freis/database-env",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -16,12 +16,12 @@
         }
     ],
     "require": {
-        "php": "^7.1",
-        "jackiedo/dotenv-editor": "^1.2"
+        "php": ">=7.1.0",
+        "jackiedo/dotenv-editor": "^2.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^4.0",
-        "phpunit/phpunit": "^8.0"
+        "orchestra/testbench": "^7.6.0",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
