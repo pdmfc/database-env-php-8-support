@@ -1,11 +1,11 @@
 {
-    "name": "freis/database-env",
+    "name": "pdmfc/database-env-php-8-support",
     "description": "Get env variables from database",
     "keywords": [
         "pdmfc",
         "database-env"
     ],
-    "homepage": "https://github.com/freis/database-env",
+    "homepage": "https://github.com/pdmfc/database-env-php-8-support",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -36,7 +36,6 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
     },
     "config": {
         "sort-packages": true
