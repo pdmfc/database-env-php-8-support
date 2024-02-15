@@ -8,7 +8,7 @@
 You can install the package via composer:
 
 ```bash
-composer require pdmfc/database-env
+composer require pdmfc/database-env-php-8-support
 ```
 
 ## Usage
